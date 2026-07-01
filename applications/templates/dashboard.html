@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
-
 {% block page_title %}Dashboard{% endblock %}
 
 {% block content %}
@@ -110,29 +109,4 @@
   </div>
 </div>
 
-=======
-
-{% block content %}
-<h1 class="page-title">Candidate Overview</h1>
-
-<div class="cards">
-    <div class="card shortlisted">
-        <h2>Shortlisted</h2>
-        <div class="count">{{ shortlisted_count }}</div>
-        <a href="{% url 'shortlisted' %}" class="view">View</a>
-    </div>
-
-    <div class="card hold">
-        <h2>On Hold</h2>
-        <div class="count">{{ hold_count }}</div>
-        <a href="{% url 'hold' %}" class="view">View</a>
-    </div>
-
-    <div class="card rejected">
-        <h2>Rejected</h2>
-        <div class="count">{{ rejected_count }}</div>
-        <a href="{% url 'rejected' %}" class="view">View</a>
-    </div>
-</div>
->>>>>>> 8b09a7aacfab883d7840148ffc29c6645096c4e0
 {% endblock %}

@@ -13,8 +13,8 @@ from .models import ShortlistedCandidate, HoldCandidate, RejectedCandidate
 def _base_context():
     return {
         "shortlisted_count": ShortlistedCandidate.objects.count(),
-        "hold_count": HoldCandidate.objects.count(),
-        "rejected_count": RejectedCandidate.objects.count(),
+        "hold_count":        HoldCandidate.objects.count(),
+        "rejected_count":    RejectedCandidate.objects.count(),
     }
 
 
@@ -23,9 +23,9 @@ def _base_context():
 def signup_view(request):
     if request.method == "POST":
         first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+        last_name  = request.POST.get("last_name")
+        email      = request.POST.get("email")
+        password   = request.POST.get("password")
 
         if User.objects.filter(username=email).exists():
             messages.error(request, "An account with that email already exists.")
@@ -38,7 +38,6 @@ def signup_view(request):
             first_name=first_name,
             last_name=last_name,
         )
-
         messages.success(request, "Account created — please sign in.")
         return redirect("login")
 
@@ -49,10 +48,9 @@ def signup_view(request):
 
 def login_view(request):
     if request.method == "POST":
-        email = request.POST.get("email")
+        email    = request.POST.get("email")
         password = request.POST.get("password")
-
-        user = authenticate(request, username=email, password=password)
+        user     = authenticate(request, username=email, password=password)
 
         if user:
             login(request, user)
@@ -78,7 +76,7 @@ def logout_view(request):
 def dashboard(request):
     context = _base_context()
     context["shortlisted_recent"] = ShortlistedCandidate.objects.order_by("-id")[:5]
-    context["hold_recent"] = HoldCandidate.objects.order_by("-id")[:5]
+    context["hold_recent"]        = HoldCandidate.objects.order_by("-id")[:5]
     return render(request, "dashboard.html", context)
 
 
@@ -88,8 +86,8 @@ def dashboard(request):
 def dashboard_counts(request):
     return JsonResponse({
         "shortlisted": ShortlistedCandidate.objects.count(),
-        "hold": HoldCandidate.objects.count(),
-        "rejected": RejectedCandidate.objects.count(),
+        "hold":        HoldCandidate.objects.count(),
+        "rejected":    RejectedCandidate.objects.count(),
     })
 
 
@@ -113,4 +111,4 @@ def hold_view(request):
 def rejected_view(request):
     context = _base_context()
     context["data"] = RejectedCandidate.objects.all()
-    return render(request, "rejected.html", context) 
+    return render(request, "rejected.html", context)
