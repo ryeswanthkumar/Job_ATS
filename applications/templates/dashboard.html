@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+<<<<<<< HEAD
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- Stats Cards -->
+<div class="stats-grid">
+
+  <div class="stat-card shortlisted">
+    <div class="stat-header">
+      <div class="stat-icon green">✅</div>
+      <span class="stat-badge green">Active</span>
+    </div>
+    <div class="stat-label">Shortlisted</div>
+    <div class="stat-number">{{ shortlisted_count }}</div>
+    <a href="{% url 'shortlisted' %}" class="stat-link">View candidates →</a>
+  </div>
+
+  <div class="stat-card hold">
+    <div class="stat-header">
+      <div class="stat-icon amber">⏸</div>
+      <span class="stat-badge amber">Pending</span>
+    </div>
+    <div class="stat-label">On Hold</div>
+    <div class="stat-number">{{ hold_count }}</div>
+    <a href="{% url 'hold' %}" class="stat-link">View candidates →</a>
+  </div>
+
+  <div class="stat-card rejected">
+    <div class="stat-header">
+      <div class="stat-icon red">❌</div>
+      <span class="stat-badge red">Closed</span>
+    </div>
+    <div class="stat-label">Rejected</div>
+    <div class="stat-number">{{ rejected_count }}</div>
+    <a href="{% url 'rejected' %}" class="stat-link">View candidates →</a>
+  </div>
+
+</div>
+
+<!-- Pipeline -->
+{% with total=shortlisted_count|add:hold_count|add:rejected_count %}
+{% if total > 0 %}
+<div class="pipeline-panel">
+  <div class="pipeline-title">Candidate Pipeline</div>
+  <div class="pipeline-bar">
+    <div class="pipeline-segment green" id="seg-shortlisted"
+         style="width: {% widthratio shortlisted_count total 100 %}%"></div>
+    <div class="pipeline-segment amber" id="seg-hold"
+         style="width: {% widthratio hold_count total 100 %}%"></div>
+    <div class="pipeline-segment red" id="seg-rejected"
+         style="width: {% widthratio rejected_count total 100 %}%"></div>
+  </div>
+  <div class="pipeline-legend">
+    <div class="legend-item">
+      <div class="legend-dot green"></div>
+      Shortlisted — {{ shortlisted_count }} ({% widthratio shortlisted_count total 100 %}%)
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot amber"></div>
+      On Hold — {{ hold_count }} ({% widthratio hold_count total 100 %}%)
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot red"></div>
+      Rejected — {{ rejected_count }} ({% widthratio rejected_count total 100 %}%)
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endwith %}
+
+<!-- Overview panels -->
+<div class="overview-grid">
+  <div class="mini-panel">
+    <div class="mini-panel-header">
+      <span class="mini-panel-title">🟢 Recent Shortlisted</span>
+      <a href="{% url 'shortlisted' %}" class="stat-link" style="font-size:12px">See all →</a>
+    </div>
+    <div class="mini-panel-body">
+      {% for c in shortlisted_recent %}
+      <div class="mini-row">
+        <div class="mini-avatar">{{ c.first_name|first|upper }}{{ c.last_name|first|upper }}</div>
+        <div class="mini-name">{{ c.first_name }} {{ c.last_name }}</div>
+        <div class="mini-meta">{{ c.experience }} yrs</div>
+      </div>
+      {% empty %}
+      <div class="mini-row" style="justify-content:center;color:#7a8399;font-size:12px">No candidates yet</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="mini-panel">
+    <div class="mini-panel-header">
+      <span class="mini-panel-title">🟡 Recent On Hold</span>
+      <a href="{% url 'hold' %}" class="stat-link" style="font-size:12px">See all →</a>
+    </div>
+    <div class="mini-panel-body">
+      {% for c in hold_recent %}
+      <div class="mini-row">
+        <div class="mini-avatar">{{ c.first_name|first|upper }}{{ c.last_name|first|upper }}</div>
+        <div class="mini-name">{{ c.first_name }} {{ c.last_name }}</div>
+        <div class="mini-meta">{{ c.experience }} yrs</div>
+      </div>
+      {% empty %}
+      <div class="mini-row" style="justify-content:center;color:#7a8399;font-size:12px">No candidates yet</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+=======
+
+{% block content %}
+<h1 class="page-title">Candidate Overview</h1>
+
+<div class="cards">
+    <div class="card shortlisted">
+        <h2>Shortlisted</h2>
+        <div class="count">{{ shortlisted_count }}</div>
+        <a href="{% url 'shortlisted' %}" class="view">View</a>
+    </div>
+
+    <div class="card hold">
+        <h2>On Hold</h2>
+        <div class="count">{{ hold_count }}</div>
+        <a href="{% url 'hold' %}" class="view">View</a>
+    </div>
+
+    <div class="card rejected">
+        <h2>Rejected</h2>
+        <div class="count">{{ rejected_count }}</div>
+        <a href="{% url 'rejected' %}" class="view">View</a>
+    </div>
+</div>
+>>>>>>> 8b09a7aacfab883d7840148ffc29c6645096c4e0
+{% endblock %}

@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<<<<<<< HEAD
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}ATS{% endblock %} — TalentTrack</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="app-layout">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="logo-icon">TT</div>
+      <div class="brand-text">
+        TalentTrack
+        <span class="brand-sub">Recruitment Suite</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <div class="nav-section-label">Main</div>
+
+      <a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        Dashboard
+      </a>
+
+      <div class="nav-section-label">Candidates</div>
+
+      <a href="{% url 'shortlisted' %}" class="nav-link {% if request.resolver_match.url_name == 'shortlisted' %}active{% endif %}">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Shortlisted
+        <span class="nav-badge green">{{ shortlisted_count }}</span>
+      </a>
+
+      <a href="{% url 'hold' %}" class="nav-link {% if request.resolver_match.url_name == 'hold' %}active{% endif %}">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M10 15V9m4 6V9"/>
+        </svg>
+        On Hold
+        <span class="nav-badge amber">{{ hold_count }}</span>
+      </a>
+
+      <a href="{% url 'rejected' %}" class="nav-link {% if request.resolver_match.url_name == 'rejected' %}active{% endif %}">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6m0-6l6 6"/>
+        </svg>
+        Rejected
+        <span class="nav-badge red">{{ rejected_count }}</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      {% if user.is_authenticated %}
+      <div class="user-info">
+        <div class="user-avatar">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</div>
+        <div>
+          <span class="user-name">{{ user.get_full_name|default:user.username }}</span>
+          <span class="user-role">HR Manager</span>
+        </div>
+      </div>
+      {% endif %}
+      <a href="{% url 'logout' %}" class="logout-btn">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+        Sign out
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- ── Main ── -->
+  <div class="main-content">
+
+    <header class="topbar">
+      <span class="topbar-title">{% block page_title %}{% endblock %}</span>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#7a8399" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" id="globalSearch" placeholder="Search candidates…">
+        </div>
+      </div>
+    </header>
+
+    <main class="page-body">
+      {% if messages %}
+      <ul class="messages-list">
+        {% for msg in messages %}
+        <li class="{{ msg.tags }}">{{ msg }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+  </div>
+</div>
+
+<script>
+  // Live table search
+  const gs = document.getElementById('globalSearch');
+  if (gs) {
+    gs.addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      document.querySelectorAll('tbody tr:not(.empty-row)').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+  }
+
+  // Per-table search
+  document.querySelectorAll('.table-search input').forEach(inp => {
+    inp.addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      const tbody = this.closest('.table-panel').querySelector('tbody');
+      tbody.querySelectorAll('tr:not(.empty-row)').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+  });
+</script>
+=======
+    <meta charset="UTF-8">
+    <title>{% block title %}ATS System{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h3>ATS Resume System</h3>
+    <div>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'shortlisted' %}">Shortlisted</a>
+        <a href="{% url 'hold' %}">Hold</a>
+        <a href="{% url 'rejected' %}">Rejected</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="page-container">
+    {% block content %}{% endblock %}
+</div>
+>>>>>>> 8b09a7aacfab883d7840148ffc29c6645096c4e0
+
+</body>
+</html>

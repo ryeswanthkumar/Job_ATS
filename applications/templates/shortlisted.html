@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+<<<<<<< HEAD
+{% block title %}Shortlisted{% endblock %}
+{% block page_title %}Shortlisted Candidates{% endblock %}
+
+{% block content %}
+
+<div class="table-panel">
+  <div class="table-toolbar">
+    <div>
+      <div class="section-title" style="font-size:15px">Shortlisted Candidates</div>
+      <div class="section-subtitle">Candidates cleared for interview</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="table-count">{{ data|length }} total</div>
+      <div class="table-search">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#7a8399" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input type="text" placeholder="Filter this list…">
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Candidate</th>
+        <th>Phone</th>
+        <th>Experience</th>
+        <th>Skills</th>
+        <th>Score</th>
+        <th>Interview Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in data %}
+      <tr>
+        <td>
+          <div class="candidate-cell">
+            <div class="candidate-avatar">{{ c.first_name|first|upper }}{{ c.last_name|first|upper }}</div>
+            <div>
+              <span class="candidate-name">{{ c.first_name }} {{ c.last_name }}</span>
+              <span class="candidate-email">{{ c.email }}</span>
+            </div>
+          </div>
+        </td>
+        <td style="color:#7a8399">{{ c.phone }}</td>
+        <td>
+          <span class="exp-text">{{ c.experience }} yr{% if c.experience != 1 %}s{% endif %}</span>
+        </td>
+        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#7a8399;font-size:12px">
+          {{ c.skills }}
+        </td>
+        <td>
+          {% if c.score %}
+            {% if c.score >= 70 %}
+              <span class="score-badge score-high">{{ c.score }}</span>
+            {% elif c.score >= 50 %}
+              <span class="score-badge score-mid">{{ c.score }}</span>
+            {% else %}
+              <span class="score-badge score-low">{{ c.score }}</span>
+            {% endif %}
+          {% else %}
+            <span style="color:#7a8399">—</span>
+          {% endif %}
+        </td>
+        <td style="color:#7a8399;font-size:12px">
+          {% if c.interview_date %}{{ c.interview_date|date:"M d, Y" }}{% else %}—{% endif %}
+        </td>
+        <td>
+          {% if c.is_selected %}
+            <span class="chip shortlisted">Selected</span>
+          {% else %}
+            <span class="chip hold">Pending</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr class="empty-row">
+        <td colspan="7">
+          <div class="empty-icon">📭</div>
+          <div class="empty-title">No shortlisted candidates</div>
+          <div class="empty-sub">Candidates that pass the ATS score will appear here</div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+=======
+{% block title %}Shortlisted Candidates{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Shortlisted Candidates</h2>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Experience</th>
+        <th>Score</th>
+    </tr>
+
+    {% for candidate in data %}
+    <tr>
+        <td>{{ candidate.first_name }} {{ candidate.last_name }}</td>
+        <td>{{ candidate.email }}</td>
+        <td>{{ candidate.phone }}</td>
+        <td>{{ candidate.experience }}</td>
+        <td>{{ candidate.score }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5" class="empty">No shortlisted candidates</td>
+    </tr>
+    {% endfor %}
+</table>
+>>>>>>> 8b09a7aacfab883d7840148ffc29c6645096c4e0
+{% endblock %}
